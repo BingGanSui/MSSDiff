@@ -1,0 +1,45 @@
+model:
+  type: mssdiff
+  input_channels: 10
+  sr_factor: 4
+
+  rrdb_num_blocks: 23
+  rrdb_block_selection: [1, 8, 15, 22]
+  rrdb_network_features: 64
+  rrdb_intermediate_features: 32
+  rrdb_channels: 256
+
+  residual_scale: 7.5
+
+  mix_method: hybrid
+
+  prior: gaussian
+
+train:
+  use_cuda: true
+  tensorboard: true
+  random_seed: null
+  distributed: false
+
+
+  phy_constraints:
+    enable: true
+    weight_precip_nonneg: 1.0
+    weight_temp_smooth: 0.0
+
+  dataset: Asia
+  epochs: 451
+  batch_size: 32
+  train_image_size: 128
+  lr: 7.0e-5
+  lr_decay_factor: 0.5
+  lr_decay_epochs: [300, 350, 400]
+  lr_warmup_steps: 50
+  clip_grad_value: 10
+  param_running_avg: 1000
+
+  visualize_batch_size: 12
+  test_interval: 50
+  val_images_interval: 1000
+  checkpoint_backup_interval: 25
+  test_batch_size: 16
